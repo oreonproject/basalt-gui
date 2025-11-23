@@ -3,9 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    basalt.url = "github:oreonproject/basalt";
   };
 
-  outputs = { self, nixpkgs }: let
+  outputs = { self, nixpkgs, basalt }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -32,6 +33,7 @@
         pango
         webkitgtk_4_1
         openssl
+        basalt.packages.${system}.default
       ];
     };
   };
