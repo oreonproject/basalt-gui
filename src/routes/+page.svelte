@@ -1,10 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { invoke } from "@tauri-apps/api/core";
+  import { goto } from "$app/navigation";
 
   let shouldShowWelcomeScreen: boolean = false;
 
   let hasAccounts: boolean = false;
+
+  let errorMessage: string = "";
 
   onMount(async () => {
     try {
@@ -21,6 +24,20 @@
     }
     hasAccounts = await invoke<boolean>("has_accounts");
   });
+
+  const loginWithGoogle = async () => {
+    try {
+      const result = await invoke("login_with_google");
+      console.log("Login result:", result);
+      if (result === "") {
+        goto("/logged-in");
+      } else {
+        errorMessage = `Google login failed. ${result}`;
+      }
+    } catch (err) {
+      console.error("Failed to login with Google:", err);
+    }
+  };
 </script>
 
 <main class="h-screen flex justify-center">
@@ -54,6 +71,7 @@
       <br />
       <button
         class="flex items-center gap-2 px-4 py-2 border border-gray-600 rounded-md hover:bg-gray-800 transition-colors w-1/5 bg-slate-700 hover:cursor-pointer"
+        on:click={loginWithGoogle}
       >
         <svg
           version="1.1"
@@ -83,6 +101,12 @@
         </svg>
         Google
       </button>
+      <br/>
+      {#if errorMessage !== ""}
+      <div>
+        <p class="text-red-500">Error: {errorMessage}</p>
+      </div>
+      {/if}
     </div>
   {/if}
   <div></div>
