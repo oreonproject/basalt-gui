@@ -40,11 +40,11 @@
   };
 </script>
 
-<main class="h-screen flex justify-center">
+<main class="flex justify-center h-screen">
   {#if shouldShowWelcomeScreen}
     <div class="mt-[40vh]">
       <p class="text-2xl">Welcome to basalt</p>
-      <p class="text-gray-400 text-center">We hope you'll love it</p>
+      <p class="text-center text-gray-400">We hope you'll love it</p>
       <br />
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -64,13 +64,13 @@
     </div>
   {/if}
   {#if !hasAccounts}
-    <div class="mt-4 flex flex-col items-center w-full">
-      <p class="text-gray-400 text-center">
+    <div class="flex flex-col items-center w-full mt-4">
+      <p class="text-center text-gray-400">
         No accounts found. Please login to one of the providers.
       </p>
       <br />
       <button
-        class="flex items-center gap-2 px-4 py-2 border border-gray-600 rounded-md hover:bg-gray-800 transition-colors w-1/5 bg-slate-700 hover:cursor-pointer"
+        class="flex items-center w-1/5 gap-2 px-4 py-2 transition-colors border border-gray-600 rounded-md hover:bg-gray-800 bg-slate-700 hover:cursor-pointer"
         on:click={loginWithGoogle}
       >
         <svg
